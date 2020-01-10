@@ -1,0 +1,192 @@
+<!-- notifier declare -->
+<notifier-container></notifier-container>
+
+<!-- LIST -->
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">List of projects</h3>
+
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <button class="btn btn-success glyphicon glyphicon-plus" (click)="ngxSmartModalService.getModal('myModal').open()"> New Project</button>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Adress</th>
+            <th>Start-date</th>
+            <th>End-date</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let p of projects">
+            <td>{{p.id}}</td>
+            <td>{{p.name}}</td>
+            <td>{{p.type}}</td>
+            <td>{{p.adress}}</td>
+            <td>{{p.start_date}}</td>
+            <td>{{p.end_date}}</td>
+            <td>
+              <div class="input-group-btn">
+                <button type="button" (click)="selectproject(p)" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">Action
+                  <span class="fa fa-caret-down"></span></button>
+                <ul class="dropdown-menu">
+                  <li><a><button class="btn btn-danger glyphicon glyphicon-trash" (click)="deleteProject(p.id)"> delete</button></a></li>
+                  <li class="divider"></li>
+                  <li><a><button class="btn btn-warning glyphicon glyphicon-check" (click)="ngxSmartModalService.getModal('updateModal').open()"> edit</button></a></li>
+                </ul>
+              </div>
+          </tr>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+
+<!--create project -->
+
+<ngx-smart-modal #myModal identifier="myModal">
+<br>
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Create new project</h3>
+    </div>
+    <form role="form" (ngSubmit)="addProject(project,2)">
+      <div class="box-body">
+        <div class="form-group">
+          <label>Project name</label>
+          <input type="text" class="form-control" name="name" [(ngModel)] = "project.name" placeholder="Name...">
+        </div>
+        <div class="form-group">
+          <label>Adress</label>
+          <input type="text" class="form-control" name="adress" [(ngModel)] = "project.adress" placeholder="Adress...">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="r3" class="flat-red" name="type" [(ngModel)] = "project.type" value="newProject" checked>
+            newProject
+          </label>
+          <label>
+            <input type="radio" name="r3" class="flat-red" name="type" [(ngModel)] = "project.type" value="runningProject">
+            runningProject
+          </label>
+          <label>
+            <input type="radio" name="r3" class="flat-red" name="type" [(ngModel)] = "project.type" value="finishedProject">
+            finishedProject
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Start-Date</label>
+          <input type="date" class="form-control" placeholder="start date" name="start_date" [(ngModel)] = "project.start_date">
+        </div>
+        <div class="form-group">
+          <label>End-Date</label>
+          <input type="date" class="form-control" placeholder="end date" name="end_date" [(ngModel)] = "project.end_date">
+        </div>
+        <div class="form-group">
+          <label>Number of ressources (Levio)</label>
+          <input type="number" class="form-control" placeholder="number of Levio ressources" name="num_ressource_levio" [(ngModel)] = "project.num_ressource_levio">
+        </div>
+        <div class="form-group">
+          <label>Number of ressources: (client)</label>
+          <input type="number" class="form-control" placeholder="number of Client ressources" name="num_ressource_all" [(ngModel)] = "project.num_ressource_all">
+        </div>
+        <div class="form-group">
+          <label>File input</label>
+          <input type="file" name="photo" [(ngModel)] = "project.photo">
+        </div>
+        <div class="form-group">
+          <label>Client</label>
+          <select class="form-control select2" style="width: 100%;">
+            <option> - </option>
+            <option *ngFor="let c of clients" name="client" [(ngModel)] = "project.client">{{c.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" (click)="myModal.close()" class="btn btn-primary">Submit</button>
+      </div>
+    </form>
+  </div>
+</ngx-smart-modal>
+
+<!-- update project -->
+
+<ngx-smart-modal #updateModal identifier="updateModal">
+  <br>
+  <div class="box box-primary">
+    <div class="box-header with-border">
+      <h3 class="box-title">Update project</h3>
+    </div>
+    <form role="form" (ngSubmit)="updateProject(updateproject)">
+      <div class="box-body">
+        <div class="form-group">
+          <label>Project name</label>
+          <input type="text" class="form-control" name="name" [(ngModel)] = "updateproject.name" placeholder="Name...">
+        </div>
+        <div class="form-group">
+          <label>Adress</label>
+          <input type="text" class="form-control" name="adress" [(ngModel)] = "updateproject.adress" placeholder="Adress...">
+        </div>
+        <div class="form-group">
+          <label>
+            <input type="radio" name="r3" class="flat-red" name="type" [(ngModel)] = "updateproject.type" value="newProject" checked>
+            newProject
+          </label>
+          <label>
+            <input type="radio" name="r3" class="flat-red" name="type" [(ngModel)] = "updateproject.type" value="runningProject">
+            runningProject
+          </label>
+          <label>
+            <input type="radio" name="r3" class="flat-red" name="type" [(ngModel)] = "updateproject.type" value="finishedProject">
+            finishedProject
+          </label>
+        </div>
+        <div class="form-group">
+          <label>Start-Date</label>
+          <input type="date" class="form-control" placeholder="start date" name="start_date" [(ngModel)] = "updateproject.start_date">
+        </div>
+        <div class="form-group">
+          <label>End-Date</label>
+          <input type="date" class="form-control" placeholder="end date" name="end_date" [(ngModel)] = "updateproject.end_date">
+        </div>
+        <div class="form-group">
+          <label>Number of ressources (Levio)</label>
+          <input type="number" class="form-control" placeholder="number of Levio ressources" name="num_ressource_levio" [(ngModel)] = "updateproject.num_ressource_levio">
+        </div>
+        <div class="form-group">
+          <label>Number of ressources (client)</label>
+          <input type="number" class="form-control" placeholder="number of Client ressources" name="num_ressource_all" [(ngModel)] = "updateproject.num_ressource_all">
+        </div>
+        <div class="form-group">
+          <label>File input</label>
+          <input type="file" name="photo" [(ngModel)] = "updateproject.photo">
+        </div>
+        <div class="form-group">
+          <label>Client</label>
+          <select class="form-control select2" style="width: 100%;">
+            <option> {{updateproject.client.name}} </option>
+            <option *ngFor="let c of clients">{{c.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="box-footer">
+        <button type="submit" class="btn btn-primary" (click)="updateModal.close()">Submit</button>
+      </div>
+    </form>
+  </div>
+</ngx-smart-modal>
+
+
+

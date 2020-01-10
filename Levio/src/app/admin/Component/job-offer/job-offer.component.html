@@ -1,0 +1,345 @@
+
+<div class="row">
+  <div class="col-md-6">
+<div class="panel panel-default panel-table" style="margin-top: 50px">
+  <div class="panel-heading">
+    <div class="panel-tools">
+      <div class="tools-icon">
+        <button type="button" class="btn btn-success m-w-120" (click)="addj()"><i class="zmdi zmdi-plus zmdi-hc-fw"></i>New Job Offer</button>
+      </div>
+      <a href="#" class="tools-icon">
+
+      </a>
+    </div>
+    <h3 class="panel-title">List of Job Offers</h3>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th style="width: 32px"></th>
+        <th style="width: 32px"></th>
+        <th>Function</th>
+        <th>date of beginning</th>
+        <th>Postes</th>
+        <th style="width: 15%">Progress</th>
+        <th>Status</th>
+        <th style="width: 5%"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let j of jobOffer" (click)="AfficheApp(j,selectstate)">
+        <td>
+
+        </td>
+        <td>
+          <img class="img-circle" src="../../../../assets/img/avatars/1.jpg" alt="" width="32" height="32">
+        </td>
+        <td>{{j.function}}</td>
+        <td><i class="zmdi-calendar-alt"></i>
+          {{j.beginning}}
+          <br>
+          <small class="text-muted"></small>
+        </td>
+
+        <td>{{j.nbPoste}}</td>
+        <td>
+          <small class="text-muted">{{j.listApplicant.length}}/{{j.nbPoste}}</small>
+          <div class="progress progress-xs m-b-0">
+            <div class="progress-bar" role="progressbar" (aria-valuenow)="calProgress(j.listApplicant.length,j.nbPoste)" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width': calProgress(j.listApplicant.length,j.nbPoste)}">
+              <span class="sr-only">70% Complete (success)</span>
+            </div>
+          </div>
+        </td>
+        <td>
+          <span *ngIf="calProgress(j.listApplicant.length,j.nbPoste)!='100%'" class="label label-outline-success">Active</span>
+          <span *ngIf="calProgress(j.listApplicant.length,j.nbPoste)=='100%'" class="label label-outline-warning">Expired</span>
+        </td>
+        <td>
+          <div class="btn-group">
+            <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Action
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li><a  (click)="updatePopUp(j)"><i class="zmdi zmdi-edit zmdi-hc-fw" style="font-size: 20px"></i>Update</a></li>
+
+            </ul>
+          </div>
+        </td>
+      </tr>
+
+
+      <tfoot>
+
+      </tfoot>
+    </table>
+
+  </div>
+</div>
+  </div>
+  <div class="col-md-6">
+<div style="margin-top: 50px" class="panel panel-default panel-table">
+  <div class="panel-heading">
+    <div class="panel-tools">
+      <div class="tools-icon">
+        <div class="form-group">
+          <label class="col-sm-3" for="form-control-9"></label>
+          <div class="col-sm-9">
+                      <select id="form-control-9" class="form-control" [(ngModel)]="filtertext.state" #selectstate>
+              <option value="">All</option>
+              <option value="interview">First interview</option>
+              <option value="testTech">Technical test</option>
+              <option value="interviewTech">Technical interview</option>
+              <option value="testFr">French test</option>
+              <option value="applicationAccepted">Folder preparation</option>
+              <option value="accepted">Accepted</option>
+              <option value="refused">Refused</option>
+            </select>
+          </div>
+        </div>      </div>
+      <span class="tools-icon" (click)="refreshAllApplication(selectstate)">
+        <i class="zmdi zmdi-refresh zmdi-hc-fw"></i>
+      </span>
+    </div>
+    <h3 class="panel-title">List of applicants</h3>
+  </div>
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th style="width: 32px"></th>
+        <th style="width: 32px"></th>
+        <th>Name</th>
+        <th>date of application</th>
+        <th>Sector</th>
+        <th>Status</th>
+        <th style="width: 5%"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let a of listApplication | filterBy:filtertext">
+        <td>
+
+        </td>
+        <td>
+          <img class="img-circle" src="../../../../assets/img/avatars/{{a.ressource.photo}}" alt="" width="32" height="32">
+        </td>
+        <td>{{a.ressource.name}}</td>
+        <td><i class="zmdi-calendar-alt"></i>
+          {{a.date_app}}
+          <br>
+          <small class="text-muted"></small>
+        </td>
+
+        <td>{{a.ressource.sector}}</td>
+
+        <td>
+          <span *ngIf="a.state.toString()=='accepted'" class="label label-outline-success">Accepted</span>
+          <span *ngIf="a.state.toString()=='interview'" class="label label-outline-primary">First interview</span>
+          <span *ngIf="a.state.toString()=='testTech'" class="label label-outline-info">Technical test</span>
+          <span *ngIf="a.state.toString()=='interviewTech'" class="label label-outline-primary">Technical interview</span>
+          <span *ngIf="a.state.toString()=='testFr'" class="label label-outline-info">French test</span>
+          <span *ngIf="a.state.toString()=='applicationAccepted'" class="label label-outline-warning">Folder preparation</span>
+          <span *ngIf="a.state.toString()=='refused'" class="label label-outline-danger">Refused</span>
+
+
+
+        </td>
+        <td>
+          <div class="btn-group">
+            <a routerLink="application/{{a.id}}" type="button" class="btn btn-primary btn-pill m-w-120">Show details</a>
+
+          </div>
+        </td>
+      </tr>
+
+
+      <tfoot>
+
+      </tfoot>
+    </table>
+
+  </div>
+</div>
+  </div>
+</div>
+<notifier-container></notifier-container>
+<ngx-smart-modal #myModal identifier="myModal">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="m-y-0">Add a new Job Offer</h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-3" style="margin-left: 20%">
+          <form [formGroup]="registerForm" (ngSubmit)="AddJobOffer()" data-toggle="validator">
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.function.hasError('function')&&submitted}">
+              <label for="form-control-1" class="control-label" >Function</label>
+              <div class="input-group">
+                <input [(ngModel)]=JobOfferadd.function formControlName="function" type="text" class="form-control" id="form-control-1" placeholder="Function" data-error="This field is required." required="">
+
+              </div>
+              <div class="help-block with-errors" *ngIf="f.function.errors&&submitted"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.date.errors&&submitted}">
+              <label for="form-control-2" class="control-label">Beginning date</label>
+              <input formControlName="date" [(ngModel)]=JobOfferadd.beginning type="date" class="form-control" id="form-control-2" placeholder="Beginning date" data-error="Please enter a valid Date ." required="">
+              <div class="help-block with-errors" *ngIf="f.function.errors&&submitted"><ul class="list-unstyled"><li>Please enter a valid Date .</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.mission.errors&&submitted}">
+              <label for="form-control-4" class="control-label">Mission</label>
+              <textarea formControlName="mission"  [(ngModel)]= JobOfferadd.mission id="form-control-4" class="form-control" rows="3"></textarea>
+<div *ngIf="f.mission.errors&&submitted">
+              <div class="help-block with-errors"*ngIf="f.mission.errors.required"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+              <div class="help-block with-errors"*ngIf="f.mission.hasError('minlength')"><ul class="list-unstyled"><li>This field is min length 8.</li></ul></div>
+</div>
+            </div>
+            <div class="form-group " [ngClass]="{' has-error has-danger':f.profil.errors&&submitted}">
+              <label for="form-control-5" class="control-label">Required profile</label>
+              <textarea formControlName="profil"  [(ngModel)]= JobOfferadd.required_profile id="form-control-5" class="form-control" rows="3" ></textarea>
+              <div *ngIf="f.profil.errors&&submitted">
+                <div class="help-block with-errors"*ngIf="f.profil.errors.required"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+                <div class="help-block with-errors"*ngIf="f.profil.hasError('minlength')"><ul class="list-unstyled"><li>This field is min length 8.</li></ul></div>
+              </div>
+
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.experience.errors&&submitted}">
+            <label for="form-control-6" class="control-label">Experience</label>
+            <div class="input-group">
+              <input formControlName="experience"  [(ngModel)]=JobOfferadd.experience type="text" class="form-control" id="form-control-6" placeholder="" >
+              <div class="help-block with-errors" *ngIf="f.experience.errors&&submitted"><ul class="list-unstyled"><li>Please enter the required experience .</li></ul></div>
+
+            </div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.nbposte.errors&&submitted}">
+            <label for="form-control-7" class="control-label">Postes</label>
+            <div class="input-group">
+              <input formControlName="nbposte"  [(ngModel)]="JobOfferadd.nbPoste"  type="number" class="form-control" id="form-control-7" placeholder="" data-error="This field is required." required="">
+              <div class="help-block with-errors" *ngIf="f.nbposte.errors&&submitted"><ul class="list-unstyled"><li>Please enter a valid number of poste .</li></ul></div>
+
+            </div>
+            </div>
+              <label for="form-control-7" class="control-label">Skills</label>
+
+                <ng-multiselect-dropdown  [placeholder]=""
+                                          [data]="dropdownList"
+                                          [(ngModel)]="selectedItems"
+                                          [settings]="dropdownSettings"
+                                          (onSelect)="onItemSelect($event)"
+                                          (onDeSelect)="OnItemDeSelect($event)"
+                                          [ngModelOptions]="{standalone: true}"
+
+
+                >
+                </ng-multiselect-dropdown>
+
+
+
+
+
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 25px"><i class="zmdi zmdi-check zmdi-hc-fw"></i>Submit</button>
+            <button (click)="myModal.close()" class="btn btn-primary btn-block" style="margin-top: 25px"><i class="zmdi zmdi-close zmdi-hc-fw"></i>Close</button>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+</ngx-smart-modal>
+<ngx-smart-modal #updateModal identifier="updateModal">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="m-y-0">Update Job Offer</h3>
+    </div>
+    <div class="panel-body">
+      <p class="text-muted m-b-15">Form validation can be enabled in markup via the data-api or via JavaScript. Automatically enable form validation by adding <code>data-toggle="validator"</code> to your form element. Features:
+        <u>validation via AJAX</u>,
+        <u>customizable error messages</u>,
+        <u>custom validator functions</u>.</p>
+      <div class="row">
+        <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-3" style="margin-left: 20%">
+          <form [formGroup]="registerForm" (ngSubmit)="updateJobOffer()" data-toggle="validator">
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.function.errors&&submitted}">
+              <label for="form-control-11" class="control-label" >Function</label>
+              <div class="input-group">
+                <input [(ngModel)]=jobOfferUpdate.function formControlName="function" type="text" class="form-control" id="form-control-11" placeholder="Function" data-error="This field is required." required="">
+
+              </div>
+              <div class="help-block with-errors" *ngIf="f.function.errors&&submitted"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.date.errors&&submitted}">
+              <label for="form-control-22" class="control-label">Beginning date</label>
+              <input formControlName="date" [(ngModel)]=jobOfferUpdate.beginning type="date" class="form-control" id="form-control-22" placeholder="Beginning date" data-error="Please enter a valid Date ." required="">
+              <div class="help-block with-errors" *ngIf="f.function.errors&&submitted"><ul class="list-unstyled"><li>Please enter a valid Date .</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.mission.errors&&submitted}">
+              <label for="form-control-44" class="control-label">Mission</label>
+              <textarea formControlName="mission"  [(ngModel)]= jobOfferUpdate.mission id="form-control-44" class="form-control" rows="3"></textarea>
+              <div *ngIf="f.mission.errors&&submitted">
+                <div class="help-block with-errors"*ngIf="f.mission.errors.required"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+                <div class="help-block with-errors"*ngIf="f.mission.hasError('minlength')"><ul class="list-unstyled"><li>This field is min length 8.</li></ul></div>
+              </div>
+            </div>
+            <div class="form-group " [ngClass]="{' has-error has-danger':f.profil.errors&&submitted}">
+              <label for="form-control-55" class="control-label">Required profile</label>
+              <textarea formControlName="profil"  [(ngModel)]= jobOfferUpdate.required_profile id="form-control-55" class="form-control" rows="3" ></textarea>
+              <div *ngIf="f.profil.errors&&submitted">
+                <div class="help-block with-errors"*ngIf="f.profil.errors.required"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+                <div class="help-block with-errors"*ngIf="f.profil.hasError('minlength')"><ul class="list-unstyled"><li>This field is min length 8.</li></ul></div>
+              </div>
+
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.experience.errors&&submitted}">
+              <label for="form-control-66" class="control-label">Experience</label>
+              <div class="input-group">
+                <input formControlName="experience"  [(ngModel)]=jobOfferUpdate.experience type="text" class="form-control" id="form-control-66" placeholder="" >
+                <div class="help-block with-errors" *ngIf="f.experience.errors&&submitted"><ul class="list-unstyled"><li>Please enter the required experience .</li></ul></div>
+
+              </div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':f.nbposte.errors&&submitted}">
+              <label for="form-control-77" class="control-label">Postes</label>
+              <div class="input-group">
+                <input formControlName="nbposte"  [(ngModel)]="jobOfferUpdate.nbPoste"  type="number" class="form-control" id="form-control-77" placeholder="" data-error="This field is required." required="">
+                <div class="help-block with-errors" *ngIf="f.nbposte.errors&&submitted"><ul class="list-unstyled"><li>Please enter a valid number of poste .</li></ul></div>
+
+              </div>
+            </div>
+            <label for="form-control-7" class="control-label">Skills</label>
+
+            <ng-multiselect-dropdown  [placeholder]=""
+                                      [data]="dropdownList"
+                                      [(ngModel)]="selectedItems"
+                                      [settings]="dropdownSettings"
+                                      (onSelect)="onItemSelectupdate($event)"
+                                      (onDeSelect)="OnItemDeSelectupdate($event)"
+                                      [ngModelOptions]="{standalone: true}"
+
+            >
+            </ng-multiselect-dropdown>
+
+
+
+
+
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 25px">Submit</button>
+            <button (click)="myModal.close()" class="btn btn-primary btn-block" style="margin-top: 25px">Close</button>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+
+</ngx-smart-modal>
+
+
+

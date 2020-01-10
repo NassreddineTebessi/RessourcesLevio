@@ -1,0 +1,215 @@
+<div class="tab-pane active" id="tab-timeline" role="tabpanel">
+  <div class="clearfix p-y-20 p-x-30">
+    <h4 class="pull-sm-left">Test</h4>
+    <button (click)="addt()" type="button" class="btn btn-outline-primary pull-sm-right" [disabled]="!(state=='interview'||state=='interviewTech')&&listTest.length<=2">
+      <i class="zmdi zmdi-plus"></i> New Test</button>
+  </div>
+  <div></div>
+  <div *ngFor="let t of listTest" class="pc-task">
+    <a href="#">
+      <div class="pct-avatar">
+        <img src="../../../../../../assets/img/avatars/3.jpg" alt="" width="40" height="40">
+      </div>
+      <div class="pct-name">{{t.test.typeTest}} version: {{t.test.version}}
+        <span *ngIf="t.note>0" class="label label-danger m-l-5">Passed</span>
+        <span *ngIf="t.note==0" class="label label-danger m-l-5">not passed</span>
+      </div>
+
+      <div class="pct-time">
+      </div>
+      <div class="pct-text">
+        <div class="col-md-6">
+          <h5>{{t.note}}%</h5>
+          <div class="progress progress-sm">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" [ngStyle]="{'width':progres(t.note)}">
+              <span class="sr-only">60% Complete</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="clearfix">
+        <button *ngIf="t.note>70" type="button" class="btn btn-outline-success btn-xs pull-right m-l-10">
+          success</button>
+        <button *ngIf="t.note<70&&t.note>0" type="button" class="btn btn-outline-danger btn-xs pull-right m-l-10">
+          success</button>
+      </div>
+    </a>
+  </div>
+
+</div>
+<ngx-smart-modal #test identifier="test">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 *ngIf="listTest.length===0" class="m-y-0">Add a new Technical Test</h3>
+      <h3 *ngIf="listTest.length===1" class="m-y-0">Add a new French Test</h3>
+    </div>
+    <div class="panel-body">
+      <p  class="text-muted m-b-15"> Add new Test
+      </p>
+      <button style="margin-left: 500px;" type="button" class="btn btn-default m-b-5 m-r-5" data-toggle="tooltip" data-placement="right" title="" data-original-title="Tooltip on right" (click)="addNewTest(listTest.length)">add new Test</button>
+      <div class="row">
+        <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-3" style="margin-left: 20%">
+          <form [formGroup]="registerForm" (ngSubmit)="AddTest()" data-toggle="validator">
+            <div *ngIf="listTest.length==1" class="form-group" [ngClass]="{' has-error has-danger':f.sel.errors&&submitted}">
+              <label for="form-control-3" class="control-label">Select a version</label>
+              <select formControlName="sel"  id="form-control-3" class="custom-select" data-error="This field is required." required="" [(ngModel)]=addTest.id>
+                <option [value]="test.id" *ngFor="let test of allTest | filterBy:filterFr">             {{test.version}}</option>
+
+              </select>
+
+              <div class="help-block with-errors" *ngIf="f.sel.hasError('required')&&submitted"><ul class="list-unstyled"><li>Please select a version .</li></ul></div>
+            </div>
+            <div *ngIf="listTest.length==0"  class="form-group" [ngClass]="{' has-error has-danger':f.sel.errors&&submitted}">
+              <label for="form-control-11" class="control-label">Select a version</label>
+              <select formControlName="sel"  id="form-control-11" class="custom-select" data-error="This field is required." required="" [(ngModel)]=addTest.id>
+                <option [value]="test.id" *ngFor="let test of allTest | filterBy:filterTech">             {{test.version}}</option>
+
+              </select>
+
+              <div class="help-block with-errors" *ngIf="f.sel.hasError('required')&&submitted"><ul class="list-unstyled"><li>Please select a version .</li></ul></div>
+            </div>
+            <div *ngIf="selDisable" class="panel panel-default panel-table" style="width: 450px;
+    margin-left: -40px;">
+              <div class="panel-heading">
+                <div class="panel-tools">
+                  <button type="button" class="btn btn-outline-success m-w-120" (click)="addQuestion()">Add Question</button>
+                </div>
+                <h3 class="panel-title">Condensed table</h3>
+                <div class="panel-subtitle">Lorem ipsum dolor sit amet</div>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-condensed">
+                  <thead>
+                  <tr>
+                    <th></th>
+                    <th>Subject</th>
+                    <th style="width: 5%"></th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr class="" *ngFor="let q of allQuestion">
+                    <td>
+                      <label class="custom-control custom-control-primary custom-checkbox active">
+                        <input class="custom-control-input" type="checkbox" name="custom" (change)="checkch($event,q)">
+                        <span class="custom-control-indicator"></span>
+                      </label>
+                    </td>
+                    <td>{{q.subject}}</td>
+                    <td>
+
+                    </td>
+
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+
+
+
+
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 25px"><i class="zmdi zmdi-check zmdi-hc-fw"></i>Submit</button>
+            <button (click)="test.close()" class="btn btn-primary btn-block" style="margin-top: 25px"><i class="zmdi zmdi-close zmdi-hc-fw"></i>Close</button>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</ngx-smart-modal>
+<ngx-smart-modal #question identifier="question">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="m-y-0">Add a new Job Offer</h3>
+    </div>
+    <div class="panel-body">
+      <p class="text-muted m-b-15">Form validation can be enabled in markup via the data-api or via JavaScript. Automatically enable form validation by adding <code>data-toggle="validator"</code> to your form element. Features:
+        <u>validation via AJAX</u>,
+        <u>customizable error messages</u>,
+        <u>custom validator functions</u>.</p>
+      <div class="row">
+        <div class="col-sm-7 col-sm-offset-1 col-md-7 col-md-offset-3" style="margin-left: 20%">
+          <form [formGroup]="registerFormQ" (ngSubmit)="AddQuestion()" data-toggle="validator">
+            <mat-radio-group class="example-radio-group" [(ngModel)]="newQuestion.validChoise" formControlName="valid">
+
+            <div class="form-group" [ngClass]="{' has-error has-danger':fQ.subject.errors&&submitted2}">
+              <label for="form-control-1" class="control-label" >Subject</label>
+              <div class="input-group">
+
+                <input [(ngModel)]=newQuestion.subject formControlName="subject" type="text" class="form-control" id="form-control-1" placeholder="Subject" data-error="This field is required." required="">
+
+              </div>
+              <div class="help-block with-errors" *ngIf="fQ.subject.errors&&submitted2"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':fQ.choice1.errors&&submitted2}">
+              <label for="form-control-2" class="control-label" >Choice 1</label>
+              <div class="input-group">
+                <mat-radio-button class="example-radio-button"   value="1">
+                <input [(ngModel)]=newQuestion.choice1 formControlName="choice1" type="text" class="form-control" id="form-control-2" placeholder="choice1" data-error="This field is required." required="">
+                </mat-radio-button>
+              </div>
+              <div class="help-block with-errors" *ngIf="fQ.choice1.errors&&submitted2"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':fQ.choice2.errors&&submitted2}">
+              <label for="form-control-4" class="control-label" >Choice 2</label>
+              <div class="input-group">
+                <mat-radio-button class="example-radio-button"  value="2">
+                <input [(ngModel)]=newQuestion.choice2 formControlName="choice2" type="text" class="form-control" id="form-control-4" placeholder="choice2" data-error="This field is required." required="">
+                </mat-radio-button>
+              </div>
+              <div class="help-block with-errors" *ngIf="fQ.choice2.errors&&submitted2"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':fQ.choice3.errors&&submitted2}">
+              <label for="form-control-5" class="control-label" >Choice 3</label>
+              <div class="input-group">
+                <mat-radio-button class="example-radio-button"  value="3">
+                <input [(ngModel)]=newQuestion.choice3 formControlName="choice3" type="text" class="form-control" id="form-control-5" placeholder="choice3" data-error="This field is required." required="">
+                </mat-radio-button>
+              </div>
+              <div class="help-block with-errors" *ngIf="fQ.choice3.errors&&submitted2"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+            <div class="form-group" [ngClass]="{' has-error has-danger':fQ.choice4.errors&&submitted2}">
+              <label for="form-control-6" class="control-label" >Choice 4</label>
+              <div class="input-group">
+                <mat-radio-button class="example-radio-button"  value="4">
+                <input [(ngModel)]=newQuestion.choice4 formControlName="choice4" type="text" class="form-control" id="form-control-6" placeholder="choice4" data-error="This field is required." required="">
+                </mat-radio-button>
+              </div>
+              <div class="help-block with-errors" *ngIf="fQ.choice4.errors&&submitted2"><ul class="list-unstyled"><li>This field is required.</li></ul></div>
+            </div>
+
+
+</mat-radio-group>
+
+
+
+
+            <button type="submit" class="btn btn-primary btn-block" style="margin-top: 25px"><i class="zmdi zmdi-check zmdi-hc-fw"></i>Submit</button>
+            <button (click)="myModal.close()" class="btn btn-primary btn-block" style="margin-top: 25px"><i class="zmdi zmdi-close zmdi-hc-fw"></i>Close</button>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+
+</ngx-smart-modal>
+<notifier-container></notifier-container>
+<style>
+  .example-radio-group {
+    display: inline-flex;
+    flex-direction: column;
+  }
+
+  .example-radio-button {
+    margin: 5px;
+  }
+
+  .example-selected-value {
+    margin: 15px 0;
+  }
+</style>

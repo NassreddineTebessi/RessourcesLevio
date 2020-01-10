@@ -1,0 +1,120 @@
+<button pButton type="button" label="Add New"  (click)="ngxSmartModalService.getModal('myModal').open()"></button>
+<br>
+<br>
+<p-table #dt [columns]="cols" [value]="_mandat" [paginator]="true" [rows]="10">
+  <ng-template pTemplate="caption">
+    <div style="text-align: right">        
+        <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+        <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+    </div>
+</ng-template>
+  <ng-template pTemplate="header" let-columns>
+      <tr>
+          <th *ngFor="let col of columns">
+              {{col.header}}
+          </th>
+      </tr>
+  
+  </ng-template>
+  <ng-template pTemplate="body" let-rowData let-columns="columns" let-mand>
+      <tr [pSelectableRow]="rowData">
+          <td >
+            {{mand.startDate}}
+          </td>
+          <td >
+            {{mand.endDate}}
+          </td>
+          <td >
+            {{mand.ressource.first_name}}{{mand.ressource.last_name}}
+          </td>
+          <td >
+            {{mand.project.name}}
+          </td>
+          <td>
+              <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+           
+            <p-button icon="fa fa-pencil-alt" (onClick)="updatepopup(mand)"></p-button>
+            <p-button icon="fa fa-trash-alt" (onClick)="deleteMandate(mand.id,mand)"></p-button>
+          
+          </td>
+      </tr>
+  </ng-template>
+</p-table>
+<ngx-smart-modal #myModal2 identifier="myModal2">
+  <form role="form" (ngSubmit)="updateMandats(Updateid,UselectedValue.id,UselectedValue2.id,startDate.value,endDate.value)" >
+    <div class="box-body">
+      <div class="form-group">
+        <label for="InputFirstName">Start Date</label>
+        <input [(ngModel)]=Updatemandat.startDate type="date" class="form-control" name="startDate" id="InputstartDate" #startDate >
+      </div>
+  
+      <div class="form-group">
+        <label for="InputLastName">End Date</label>
+        <input [(ngModel)]=Updatemandat.endDate type="date" class="form-control" name="endDate" id="InputendDate"  #endDate>
+      </div>
+  
+  
+ 
+      <div class="form-group"> 
+        <label for="InputProfile">Project Name</label>
+        <select [(ngModel)]="UselectedValue" name="projectssid"   #projectssid>  
+         
+            <option *ngFor="let p of projects" [ngValue]="p"    [selected]="p.name ==UpdateProjectName">{{p.name}}</option>
+          </select>
+      </div>
+  
+      <div class="form-group"> 
+        <label for="InputEmail">Ressource Name</label>
+        <select [(ngModel)]="UselectedValue2" name="resourcessid"  #resourcessid>  
+
+          <option *ngFor="let r of ressources" [ngValue]="r"   [selected]="r.first_name+' '+r.last_name ==UpdateResourceName" >  {{r.first_name}}{{r.last_name}}</option>
+        </select>          </div>
+  
+     
+  
+  
+    </div>
+    <div class="box-footer">
+      <button type="submit" class="btn btn-primary" (click)="ngxSmartModalService.getModal('myModal').close()">Submit</button>
+    </div>
+  </form>
+  </ngx-smart-modal>
+
+
+
+  <ngx-smart-modal #myModal identifier="myModal">
+      <form role="form" (ngSubmit)="addMandat(selectedValue.id,selectedValue2.id,sdate.value,edate.value)" >
+        <div class="box-body">
+          <div class="form-group">
+            <label for="InputFirstName">Start Date</label>
+            <input ngModel type="date" class="form-control" name="startDate" id="InputstartDate"  #sdate="ngModel">
+          </div>
+      
+          <div class="form-group">
+            <label for="InputLastName">End Date</label>
+            <input ngModel type="date" class="form-control" name="endDate" id="InputendDate" #edate="ngModel" >
+          </div>
+      
+       
+          <div class="form-group"> 
+            <label for="InputProfile">Project Name</label>
+            <select [(ngModel)]="selectedValue" name="projectsid"  #projectsid>  
+                <option *ngFor="let p of projects" [ngValue]="p"   >{{p.name}}</option>
+              </select>
+          </div>
+      
+          <div class="form-group"> 
+            <label for="InputEmail">Ressource Name</label>
+            <select [(ngModel)]="selectedValue2" name="resourcesid"  #resourcesid>  
+              <option *ngFor="let r of ressources" [ngValue]="r"   >  {{r.first_name}}{{r.last_name}}</option>
+            </select>          </div>
+      
+         
+      
+      
+        </div>
+        <div class="box-footer">
+          <button type="submit" class="btn btn-primary" (click)="ngxSmartModalService.getModal('myModal').close()">Submit</button>
+        </div>
+      </form>
+      </ngx-smart-modal>

@@ -1,0 +1,332 @@
+<div class="row">
+  <div class="col-lg-4 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-green">
+      <div class="inner">
+        <h3>{{numresmandate}}</h3>
+
+        <p>Resources in mandates</p>
+      </div>
+      <div class="icon" style="top: 3px;">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-4 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-red">
+      <div class="inner">
+        <h3>{{numresintermandate}}</h3>
+
+        <p>Unoccupied Resources</p>
+      </div>
+      <div class="icon" style="top: 3px;">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+  </div>
+  <!-- ./col -->
+  <div class="col-lg-4 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-blue">
+      <div class="inner">
+        <h3>{{numresadmin}}</h3>
+
+        <p>Admin Agents</p>
+      </div>
+      <div class="icon" style="top: 3px;">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-6 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-yellow">
+      <div class="inner">
+        <h3>{{numreslevio}}</h3>
+
+        <p>Number of Levio employees</p>
+      </div>
+      <div class="icon" style="top: 3px;">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6 col-xs-6">
+    <!-- small box -->
+    <div class="small-box bg-aqua">
+      <div class="inner">
+        <h3>{{numresfreelance}}</h3>
+
+        <p>Number of freelancers</p>
+      </div>
+      <div class="icon" style="top: 3px;">
+        <i class="fa fa-user"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class=" col col-xl-6 col-md-6 col-sm-6">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">Satisfaction Rate</h3>
+      <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="col-lg-6" style="float: none; margin: 0 auto;">
+      <circle-progress
+        [percent]="satisfactionRate"
+        [animation]="true"
+        [animationDuration]="600"
+        [showSubtitle]="false"
+        [titleFontSize] = "60"
+        [unitsFontSize] = "30"
+        [radius] = "120"
+        [outerStrokeWidth] = "20"
+        [space] = "3"
+        [innerStrokeWidth] = "6"
+        [outerStrokeColor] = "'#1793a8'"
+        [innerStrokeColor] = "'#a9c8d1'"
+      ></circle-progress>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      <div class="col col-xl-6 col-md-6 col-sm-6 text-center">
+        <p style="font-size: 1em;">Satisfactions</p>
+        <div style="font-size: 2em;">{{satisfactions}}</div> <i class="fa fa-thumbs-up fa-4x" style="color: #00a65a;" aria-hidden="true"></i>
+      </div>      <div class="col col-xl-6 col-md-6 col-sm-6 text-center">
+      <p style="font-size: 1em;">Complaints</p>
+      <div style="font-size: 2em;">{{reclamations}}</div> <i class="fa fa-thumbs-down fa-4x" style="color: #f56954;" aria-hidden="true"></i>
+      </div>
+    </div>
+    <!-- box-footer -->
+  </div>
+  <!-- /.box -->
+  </div>
+  <div class=" col col-xl-6 col-md-6 col-sm-6">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title">Most Common Skills</h3>
+      <!-- /.box-tools -->
+    </div>
+    <!-- /.box-header -->
+    <div class="box-body">
+      <canvas id="skills">{{ skills }}</canvas>
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer"></div>
+    <!-- box-footer -->
+  </div>
+  <!-- /.box -->
+  </div>
+</div>
+<div class="row">
+  <div class=" col col-xl-6 col-md-6 col-sm-6">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Most Profitable Projects</h3>
+        <!-- /.box-tools -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <canvas id="profitProjects">{{ profitProjects }}</canvas>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer"></div>
+      <!-- box-footer -->
+    </div>
+    <!-- /.box -->
+  </div>
+  <div class=" col col-xl-6 col-md-6 col-sm-6">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Most Profiable Clients</h3>
+        <!-- /.box-tools -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <canvas id="profitClients">{{ profitClients }}</canvas>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer"></div>
+      <!-- box-footer -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+<div class="row">
+  <div class=" col col-xl-12 col-md-12 col-sm-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Most Profitable Projects</h3>
+        <!-- /.box-tools -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+        <canvas id="mandatesProgress">{{ mandatesProgress }}</canvas>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer"></div>
+      <!-- box-footer -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+<div class="row">
+  <div class=" col col-xl-12 col-md-12 col-sm-12">
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Profit per month</h3>
+        <!-- /.box-tools -->
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body">
+      <canvas id="profitPerMonth">{{profitPerMonth}}</canvas>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer"></div>
+      <!-- box-footer -->
+    </div>
+    <!-- /.box -->
+  </div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Resources List</h3>
+
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input type="text" [(ngModel)]="searchWord" name="searchWord" class="form-control pull-right" placeholder="Search">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Contract Type</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+          <tr *ngFor="let res of listresources | filterTableResource:searchWord">
+            <td>{{res.id}}</td>
+            <td>{{res.first_name}}</td>
+            <td>{{res.last_name}}</td>
+            <td>{{res.contract_type}}</td>
+            <td>{{res.email}}</td>
+            <td><button type="button" class="btn btn-success viewProfile" data-toggle="modal" data-target="#modal-default" (click)="showProfile(res)">View Profile</button></td>
+          </tr>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="box">
+      <div class="box-header">
+        <h3 class="box-title">Resources List</h3>
+
+        <div class="box-tools">
+          <div class="input-group input-group-sm" style="width: 150px;">
+            <input type="text" [(ngModel)]="searchWord2" name="searchWord2" class="form-control pull-right" placeholder="Search">
+
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-default"><i class="fa fa-search"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.box-header -->
+      <div class="box-body table-responsive no-padding">
+        <table class="table table-hover">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Project Status</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Client</th>
+            <th>Project Efficiency</th>
+          </tr>
+          <tr *ngFor="let res of listprojects | filterTableResource:searchWord2">
+            <td>{{res.id}}</td>
+            <td>{{res.name}}</td>
+            <td>{{res.type}}</td>
+            <td>{{res.start_date}}</td>
+            <td>{{res.end_date}}</td>
+            <td>{{res.client.name}}</td>
+            <td><button type="button" class="btn btn-success viewProfile" (click)="calculateEff($event,res.id)">Calculate</button></td>
+          </tr>
+        </table>
+      </div>
+      <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+  </div>
+</div>
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">Profile</h4>
+      </div>
+      <div class="modal-body">
+        <!-- Profile Image -->
+        <div class="box box-primary">
+          <div class="box-body box-profile">
+            <img *ngIf="profilePhoto" class="profile-user-img img-responsive img-circle" src="../assets/img/avatars/{{profilePhoto}}" alt="User profile picture">
+
+            <h3 class="profile-username text-center">{{profileFirstName}} {{profileLastName}}</h3>
+
+            <p class="text-muted text-center">{{profileContractType}}</p>
+
+            <div class="box-footer">
+              <div class="row">
+                <div class="col-sm-6 border-right">
+                  <div class="description-block">
+                    <h5 class="description-header" [style.color]="profileSateColor">{{profileState}}</h5>
+                    <span class="description-text"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Availability</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-6">
+                  <div class="description-block">
+                    <h5 class="description-header">{{profileEffeciency}}</h5>
+                    <span class="description-text"><i class="fa fa-rocket" aria-hidden="true"></i> Effeciency</span>
+                  </div>
+                  <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+              </div>
+              <!-- /.row -->
+            </div>
+            <button  class="btn btn btn-app btn-block" style="margin: 0;" (click)="generateReport(profileId)"><i class="fa fa-save"></i> Generate Report</button>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<notifier-container></notifier-container>

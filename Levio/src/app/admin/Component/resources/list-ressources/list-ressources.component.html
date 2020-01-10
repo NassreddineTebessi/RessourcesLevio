@@ -1,0 +1,120 @@
+<section class="content-header">
+  <h1>
+    Ressources
+  </h1>
+
+  <ol class="breadcrumb">
+    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+    <li class="active">Ressources </li>
+
+  </ol>
+</section>
+
+<section class="content">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="box" >
+        <div class="box-body">
+
+          <p-table #dt [columns]="cols" [value]="ress" [paginator]="true" [rows]="10">
+            <ng-template pTemplate="caption">
+              <div style="text-align: right">
+                <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
+                <input type="text" pInputText size="50" placeholder="Global Filter" (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+              </div>
+            </ng-template>
+            <ng-template pTemplate="header" let-columns>
+              <tr>
+                <th *ngFor="let col of columns">
+                  {{col.header}}
+                </th>
+              </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-columns="columns" let-ressource>
+              <tr [pSelectableRow]="rowData">
+                <td >
+                  {{ressource.first_name}}
+                </td>
+                <td >
+                  {{ressource.last_name}}
+                </td>
+                <td >
+                  {{ressource.contract_type}}
+                </td>
+                <td><a [routerLink]=" ['../detailsressource',ressource.id]" routerLinkActive="active"><i class="fa fa-edit"></i></a>
+                  &nbsp;&nbsp;&nbsp;&nbsp; <a (click)="deleteRessource(ressource.id,ressource)"><i class="fa fa-remove"></i></a>
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+
+        </div>
+
+      </div>
+
+      <button class="btn btn-success glyphicon glyphicon-plus" (click)="ngxSmartModalService.getModal('myModal').open()"> </button>
+
+
+    </div>
+  </div>
+</section>
+
+
+<notifier-container></notifier-container>
+<ngx-smart-modal #myModal identifier="myModal">
+<form role="form" (ngSubmit)="addRessource(ObjectRessource)" enctype="multipart/form-data">
+  <div class="box-body">
+    <div class="form-group">
+      <label for="InputFirstName">First name</label>
+      <input type="text" class="form-control" name="name" id="InputFirstName" [(ngModel)] = "ObjectRessource.first_name" placeholder="Enter first name">
+    </div>
+
+    <div class="form-group">
+      <label for="InputLastName">Last name</label>
+      <input type="text" class="form-control" name="name" id="InputLastName" [(ngModel)] = "ObjectRessource.last_name" placeholder="Enter last name">
+    </div>
+
+
+    <div class="form-group">
+      <label for="InputProfile">Profile</label>
+      <input type="text" class="form-control" name="name" id="InputProfile" [(ngModel)] = "ObjectRessource.profile" placeholder="Enter profile">
+    </div>
+
+    <div class="form-group">
+      <label for="InputEmail">Email Adress</label>
+      <input type="text" class="form-control" name="name" id="InputEmail" [(ngModel)] = "ObjectRessource.email" placeholder="Enter email">
+    </div>
+
+    <div class="form-group">
+      <label for="InputSector">Sector</label>
+      <input type="text" class="form-control" name="name" id="InputSector" [(ngModel)] = "ObjectRessource.sector" placeholder="Enter sector">
+    </div>
+
+    <div class="form-group">
+      <label for="InputContract">Contract type</label>
+      <select class="form-control select2" style="width: 100%;" name="name" id="InputContract" [(ngModel)] = "ObjectRessource.contract_type">
+        <option value="">Select an option</option>
+        <option value="employee">employee</option>
+        <option value="freelance">freelance</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="InputNote">Note</label>
+      <input type="text" class="form-control" name="name" id="InputNote" [(ngModel)] = "ObjectRessource.note" placeholder="Enter note">
+    </div>
+
+    <div class="form-group">
+      <label for="InputPhoto">Photo</label>
+      <input type="file" class="form-control" name="name" (change)="onFileSelected($event)" id="InputPhoto" #photo placeholder="Enter photo">
+    </div>
+
+
+  </div>
+  <div class="box-footer">
+    <button type="submit" class="btn btn-primary" (click)="ngxSmartModalService.getModal('myModal').close()">Submit</button>
+  </div>
+</form>
+</ngx-smart-modal>
+

@@ -1,0 +1,46 @@
+<div class="tab-content">
+  <div *ngIf="JOffer">
+    <h1 style="text-align: center">Job Offer</h1>
+    <hr>
+    <div class="row">
+      <div style="margin-top: 50px">
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3"> <span style="font-size: large ; font-weight: bold" >Function :</span></div>
+          <div class=" col-md-8"><span style="font-size: large">{{JOffer.function}}</span></div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3" > <span style="font-size: large ; font-weight: bold" >Mission :</span></div>
+          <div class="col-md-7 col-md-offset-1" style="margin-left: 0%"><p style="font-size: 12px;text-align: justify">{{JOffer.mission}}</p></div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3"> <span style="font-size: large ; font-weight: bold" >Function :</span></div>
+          <div class=" col-md-8"><span style="font-size: large">{{JOffer.function}}</span></div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3" > <span style="font-size: large ; font-weight: bold" >Required profile :</span></div>
+          <div class="col-md-7 col-md-offset-1" style="margin-left: 0%"><p style="font-size: 12px;text-align: justify">{{JOffer.required_profile}}</p></div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3" > <span style="font-size: large ; font-weight: bold" >Required skills :</span></div>
+          <div class="col-md-7 col-md-offset-1" style="margin-left: 0%">
+            <ul *ngFor="let s of JOffer?.listSkills">
+              <li>{{s.name}}</li>
+            </ul>
+          </div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3" > <span style="font-size: large ; font-weight: bold" >beginning date :</span></div>
+          <div class="col-md-7 col-md-offset-1" style="margin-left: 0%"><p style="font-size: 12px;text-align: justify">{{JOffer.beginning}}</p></div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3" > <span style="font-size: large ; font-weight: bold" >Experience :</span></div>
+          <div class="col-md-7 col-md-offset-1" style="margin-left: 0%"><p style="font-size: 12px;text-align: justify">{{JOffer.experience}}</p></div>
+        </div>
+        <div style="height: 50px;margin-bottom: 10px;">
+          <div class="col-md-offset-1 col-md-3" > <span style="font-size: large ; font-weight: bold" >Nomber of posts :</span></div>
+          <div class="col-md-7 col-md-offset-1" style="margin-left: 0%"><p style="font-size: 12px;text-align: justify">{{JOffer.nbPoste}}</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

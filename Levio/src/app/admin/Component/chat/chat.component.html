@@ -1,0 +1,34 @@
+<div class="chat_window">
+  <div class="top_menu">
+    <div class="title">Chat</div>
+  </div>
+  <ul class="messages">
+    <li *ngFor="let message of messages" [ngClass]="message.user == fullName ? 'message left appeared' : 'message right appeared'">
+      <div class="avatar">
+        <img class="avatar" src="../../../../assets/img/clients/{{message.filteredName | lowercase}}.jpg" style="border-radius: 100px; width: 60px; height: 60px;">
+      </div>
+      <div class="text_wrapper">
+        <div class="text"><b>{{message.user}}</b> {{message.message}}</div>
+        <div class="datetime">{{currendDate | date:'dd-MM-yyyy hh-mm'}}</div>
+      </div>
+    </li>
+  </ul>
+  <div class="bottom_wrapper clearfix">
+    <div class="message_input_wrapper">
+      <input [(ngModel)]="message" (keyup)="$event.keyCode == 13 && sendMessage()" class="message_input" placeholder="Type your message here..." />
+    </div>
+      <button class="send_message" (click)="sendMessage()">Send</button>
+  </div>
+</div>
+<div class="message_template">
+  <li class="message">
+    <div class="avatar">
+
+    </div>
+    <div class="text_wrapper">
+      <div class="text">
+
+      </div>
+    </div>
+  </li>
+</div>
